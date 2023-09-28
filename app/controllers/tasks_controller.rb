@@ -27,7 +27,10 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      redirect_to tasks_path, notice: "Task was successfully updated.", status: :see_other
+      respond_to do |format|
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("#{helpers.dom_id(@task)}_item", @task) }
+        format.html { redirect_to tasks_path, notice: "Task was successfully updated.", status: :see_other }
+      end
     else
       render :edit, status: :unprocessable_entity
     end
