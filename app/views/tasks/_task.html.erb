@@ -1,17 +1,21 @@
-<div id="<%= dom_id task %>">
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Description:</strong>
-    <%= task.description %>
-  </p>
+<div id="<%= dom_id(task) %>_item">
+  <%= turbo_frame_tag dom_id(task) do %>
+    <p class="my-5">
+      <strong class="block font-medium mb-1">Description: <%= task.description %></strong>
+    </p>
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Status:</strong>
-    <%= task.status %>
-  </p>
+    <div class="my-5">
+      <% if task.pending? %>
+        <%= button_to task.status, task_path(task, task: { status: "complete" }), method: :patch %>
+      <% else %>
+        <%= button_to task.status, task_path(task, task: { status: "pending" }), method: :patch %>
+      <% end %>
+    </div>
 
-  <% if action_name != "show" %>
-    <%= link_to "Show this task", task, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%= link_to 'Edit this task', edit_task_path(task), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+    <div class="flex justify-content-inline">
+      <%= link_to "Edit this task", edit_task_path(task), class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+      <%= button_to "Delete", task_path(task), method: :delete, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    </div>
     <hr class="mt-6">
   <% end %>
 </div>

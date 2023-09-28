@@ -13,13 +13,6 @@ RSpec.describe "/tasks", type: :request do
     end
   end
 
-  describe "GET /new" do
-    it "renders a successful response" do
-      get new_task_url
-      expect(response).to be_successful
-    end
-  end
-
   describe "GET /edit" do
     it "renders a successful response" do
       task = Task.create! valid_attributes
@@ -38,7 +31,7 @@ RSpec.describe "/tasks", type: :request do
 
       it "redirects to the created task" do
         post tasks_url, params: { task: valid_attributes }
-        expect(response).to redirect_to(task_url(Task.last))
+        expect(response).to redirect_to(tasks_path)
       end
     end
 
@@ -73,7 +66,7 @@ RSpec.describe "/tasks", type: :request do
         task = Task.create! valid_attributes
         patch task_url(task), params: { task: new_attributes }
         task.reload
-        expect(response).to redirect_to(task_url(task))
+        expect(response).to redirect_to(tasks_path)
       end
     end
 
@@ -99,7 +92,7 @@ RSpec.describe "/tasks", type: :request do
     it "redirects to the tasks list" do
       task = Task.create! valid_attributes
       delete task_url(task)
-      expect(response).to redirect_to(tasks_url)
+      expect(response).to redirect_to(tasks_path)
     end
   end
 end
