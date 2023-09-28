@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[ edit update destroy ]
 
   def index
-    @tasks = Task.order(id: :desc)
+    @tasks = Task.ordered
   end
 
   def new
