@@ -1,21 +1,17 @@
-<div id="<%= dom_id(task) %>_item">
-  <%= turbo_frame_tag dom_id(task) do %>
-    <p class="my-5">
-      <strong class="block font-medium mb-1">Description: <%= task.description %></strong>
-    </p>
+<li id="<%= "#{dom_id(task)}_item" %>" class="py-3 mb-1">
+  <%= turbo_frame_tag dom_id(task) do  %>
+    <div class="flex items-center justify-between">
+      <%= link_to task.description, edit_task_path(task), class: "flex-1 #{"line-through opacity-50" if task.complete?}" %>
 
-    <div class="my-5">
-      <% if task.pending? %>
-        <%= button_to task.status, task_path(task, task: { status: "complete" }), method: :patch %>
-      <% else %>
-        <%= button_to task.status, task_path(task, task: { status: "pending" }), method: :patch %>
-      <% end %>
-    </div>
+      <div class="flex items-center space-x-3">
+        <% if task.pending? %>
+          <%= button_to "Mark complete", task_path(task, task: { status: "complete" }), method: :patch, class: "btn btn-sm" %>
+        <% else %>
+          <%= button_to "Mark pending", task_path(task, task: { status: "pending" }), method: :patch, class: "btn btn-success btn-sm" %>
+        <% end %>
 
-    <div class="flex justify-content-inline">
-      <%= link_to "Edit this task", edit_task_path(task), class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-      <%= button_to "Delete", task_path(task), method: :delete, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+        <%= button_to "Delete", task_path(task), method: :delete, class: "btn btn-error btn-sm" %>
+      </div>
     </div>
-    <hr class="mt-6">
   <% end %>
-</div>
+</li>
