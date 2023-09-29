@@ -3,11 +3,11 @@ require "rails_helper"
 RSpec.describe TasksController, type: :routing do
   describe "routing" do
     it "routes to #index" do
-      expect(get: "/tasks").to route_to("tasks#index")
+      expect(get: "/stacks/1/tasks").to route_to("tasks#index", stack_id: "1")
     end
 
     it "routes to #new" do
-      expect(get: "/tasks/new").to route_to("tasks#new")
+      expect(get: "/stacks/1/tasks/new").to route_to("tasks#new", stack_id: "1")
     end
 
     it "routes to #edit" do
@@ -16,7 +16,7 @@ RSpec.describe TasksController, type: :routing do
 
 
     it "routes to #create" do
-      expect(post: "/tasks").to route_to("tasks#create")
+      expect(post: "/stacks/1/tasks").to route_to("tasks#create", stack_id: "1")
     end
 
     it "routes to #update via PUT" do

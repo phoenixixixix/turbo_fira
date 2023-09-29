@@ -7,7 +7,7 @@
           <h2 class="card-title"><%= stack.title %></h2>
           <div class="card-actions justify-end">
             <div class="inline">
-              <%= link_to "Show", stack, class: "btn" %>
+              <%= link_to "Tasks", stack_tasks_path(stack), class: "btn" %>
               <%= link_to "Edit", edit_stack_path(stack), class: "btn ml-1" %>
             </div>
           </div>
