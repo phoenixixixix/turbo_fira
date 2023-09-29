@@ -1,0 +1,17 @@
+<div id="<%= dom_id stack %>">
+  <div class="indicator w-full">
+    <span class="indicator-item indicator-top indicator-end badge badge-lg badge-secondary">9</span>
+
+      <div class="card w-full bg-neutral text-neutral-content">
+        <div class="card-body">
+          <h2 class="card-title"><%= stack.title %></h2>
+          <div class="card-actions justify-end">
+            <div class="inline">
+              <%= link_to "Show", stack, class: "btn" %>
+              <%= link_to "Edit", edit_stack_path(stack), class: "btn ml-1" %>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>

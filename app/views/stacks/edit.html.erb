@@ -1,0 +1,7 @@
+<div class="mx-auto md:w-2/3 w-full">
+  <h1 class="font-bold text-4xl">Editing stack</h1>
+
+  <%= render "form", stack: @stack %>
+
+  <%= button_to "Delete", stack_path(@stack), method: :delete, class: "btn btn-warning mt-6" %>
+</div>
