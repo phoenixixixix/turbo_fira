@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_28_211411) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_29_111833) do
   create_table "stacks", force: :cascade do |t|
     t.string "title"
     t.datetime "created_at", null: false
@@ -22,6 +22,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_28_211411) do
     t.integer "status", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "stack_id"
+    t.index ["stack_id"], name: "index_tasks_on_stack_id"
   end
 
 end
