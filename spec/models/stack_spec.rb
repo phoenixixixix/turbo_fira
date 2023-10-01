@@ -21,6 +21,22 @@ RSpec.describe Stack, type: :model do
         }.to change { Task.count }.by(-1)
         expect { task.reload }.to raise_error(ActiveRecord::RecordNotFound)
       end
+
+      describe "counter cache" do
+        it "increments value on adding tasks to Stack" do
+          expect {
+            stack.tasks.create(task_attrs)
+          }.to change { stack.tasks.size }.by(1)
+        end
+
+        it "decrements value on removing tasks from Stack" do
+          task = create(:task, stack: stack)
+
+          expect {
+            task.destroy
+          }.to change { stack.tasks.size }.by(-1)
+        end
+      end
     end
   end
 
