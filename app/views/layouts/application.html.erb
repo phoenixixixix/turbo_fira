@@ -12,16 +12,18 @@
   </head>
 
   <body>
-    <main class="container mx-auto max-w-3xl py-24 px-4">
-      <% if notice.present? %>
-        <div class="absolute top-0 pt-2">
-          <div class="alert bg-base-100 drop-shadow-sm">
+    <% if notice.present? %>
+      <div class="container mx-auto max-w-3xl relative px-4">
+        <div class="absolute inset-0 pt-2 px-4">
+          <div class="alert bg-base-100 border-0 shadow">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             <span><%= notice %></span>
           </div>
         </div>
-      <% end %>
+      </div>
+    <% end %>
 
+    <main class="container mx-auto max-w-3xl pt-24 px-4">
       <%= yield %>
     </main>
   </body>

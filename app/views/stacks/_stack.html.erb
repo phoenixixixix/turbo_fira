@@ -1,19 +1,20 @@
-<div id="<%= dom_id stack %>">
-  <div class="indicator w-full">
-    <span class="indicator-item indicator-top indicator-end badge badge-lg badge-secondary">
-      <%= stack.tasks.size %>
-    </span>
+<div id="<%= dom_id stack %>" class="flex space-x-4 w-full">
+  <div class="bg-neutral rounded-xl shadow w-4/5 p-3">
+    <div class="h-full flex justify-between items-center">
+      <%= link_to stack_tasks_path(stack) do %>
+        <p class="text-2xl font-bold text-base-300 hover:scale-y-125 transition delay-50"><%= stack.title %></p>
+      <% end %>
 
-      <div class="card w-full bg-neutral text-neutral-content">
-        <div class="card-body">
-          <h2 class="card-title"><%= stack.title %></h2>
-          <div class="card-actions justify-end">
-            <div class="inline">
-              <%= link_to "Tasks", stack_tasks_path(stack), class: "btn" %>
-              <%= link_to "Edit", edit_stack_path(stack), class: "btn ml-1" %>
-            </div>
-          </div>
-        </div>
+      <div class="flex">
+        <%= link_to "Edit", edit_stack_path(stack), class: "btn px-6" %>
       </div>
+    </div>
+  </div>
+
+  <div class="stats shadow w-1/5">
+    <div class="stat flex items-center">
+      <div class="stat-title">Tasks</div>
+      <div class="stat-value"><%= stack.tasks.size %></div>
+    </div>
   </div>
 </div>

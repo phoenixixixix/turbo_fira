@@ -3,5 +3,7 @@
 
   <%= render "form", stack: @stack %>
 
-  <%= button_to "Delete", stack_path(@stack), method: :delete, class: "btn btn-warning mt-6" %>
+  <div class="flex sm:justify-end sm:-mt-12 mt-6">
+    <%= button_to "Delete", stack_path(@stack), method: :delete, class: "btn btn-warning" %>
+  </div>
 </div>
