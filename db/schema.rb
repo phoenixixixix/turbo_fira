@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_30_085107) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_03_193837) do
   create_table "stacks", force: :cascade do |t|
     t.string "title"
     t.datetime "created_at", null: false
@@ -25,6 +25,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_30_085107) do
     t.datetime "updated_at", null: false
     t.integer "stack_id"
     t.index ["stack_id"], name: "index_tasks_on_stack_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
 end
