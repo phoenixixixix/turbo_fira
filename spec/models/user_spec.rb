@@ -1,6 +1,31 @@
 require "rails_helper"
 
 RSpec.describe User, type: :model do
+  describe "password" do
+    subject { build(:user) }
+
+    it "expects success with walid password attrs" do
+      subject.assign_attributes(password_digest: "welcome", password_confirmation: "welcome")
+
+      expect(subject).to be_valid
+      expect { subject.save }.to change { User.count }.by(1)
+    end
+
+    it "requires password" do
+      subject.password_digest = ""
+
+      expect(subject).to be_invalid
+      expect(subject.errors.full_messages).to include("Password can't be blank")
+    end
+
+    it "expects record invalid if password and password_confirmation don't match" do
+      subject.assign_attributes(password_digest: "welcome", password_confirmation: "nomatch")
+
+      expect(subject).to be_invalid
+      expect(subject.errors.full_messages).to include("Password confirmation doesn't match Password")
+    end
+  end
+
   describe "email" do
     subject { build(:user) }
 
@@ -62,6 +87,19 @@ RSpec.describe User, type: :model do
         expect(user.email).to_not eq(upcase_email)
         expect(user.email).to eq(downcase_email)
       end
+    end
+  end
+
+  describe "authentication mechanism" do
+    let(:auth_password) { { password: "welcome" } }
+    let(:authable_user) { create(:user, password: auth_password, password_confirmation: auth_password) }
+
+    it "authenticate user" do
+      expect(authable_user.authenticate(auth_password)).to be_truthy
+    end
+
+    it "doesn't authenticate user with invalid password" do
+      expect(authable_user.authenticate("invalid")).to be_falsey
     end
   end
 end
