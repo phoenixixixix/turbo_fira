@@ -1,0 +1,28 @@
+<div class="mx-auto md:w-2/3 w-full">
+  <h1>Sign Up</h1>
+
+  <%= form_with model: @user, url: sign_up_path do |form| %>
+    <%= render "shared/error_messages", resource: @user %>
+
+    <div class="space-y-3">
+      <div>
+        <%= form.label :email, class: "label-text" %>
+        <%= form.text_field :email, placeholder: "example@mail.com", required: true, class: "input input-bordered w-full" %>
+      </div>
+
+      <div>
+        <%= form.label :password, class: "label-text" %>
+        <%= form.text_field :password, required: true, class: "input input-bordered w-full" %>
+      </div>
+
+      <div>
+        <%= form.label :password_confirmation, class: "label-text" %>
+        <%= form.text_field :password_confirmation, required: true, class: "input input-bordered w-full" %>
+      </div>
+
+      <div>
+        <%= form.submit class: "btn btn-primary w-full" %>
+      </div>
+    </div>
+  <% end %>
+</div>
