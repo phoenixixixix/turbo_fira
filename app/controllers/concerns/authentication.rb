@@ -15,6 +15,10 @@ module Authentication
     reset_session
   end
 
+  def redirect_if_authenticated!
+    redirect_to root_path, notice: "You are already logged in." if current_user
+  end
+
   private
 
   def current_user

@@ -8,6 +8,17 @@ RSpec.describe "/sessions", type: :request do
       get log_in_path
       expect(response).to be_successful
     end
+
+    it "redirects to root path if user already logged in" do
+      log_in(create(:user))
+
+      get log_in_path
+
+      expect(response).to redirect_to(root_path)
+
+      follow_redirect!
+      expect(response.body).to include("You are already logged in.")
+    end
   end
 
   describe "POST /log_in" do
@@ -37,7 +48,7 @@ RSpec.describe "/sessions", type: :request do
     end
   end
 
-  describe "GET /log_out" do
+  describe "DELETE /log_out" do
     before do
       log_in(create(:user))
     end

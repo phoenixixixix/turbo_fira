@@ -8,6 +8,17 @@ RSpec.describe "/users", type: :request do
       get sign_up_path
       expect(response).to be_successful
     end
+
+    it "redirects to root path if user already logged in" do
+      log_in(create(:user))
+
+      get sign_up_path
+
+      expect(response).to redirect_to(root_path)
+
+      follow_redirect!
+      expect(response.body).to include("You are already logged in.")
+    end
   end
 
   describe "POST /sign_up" do
