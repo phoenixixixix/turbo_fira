@@ -11,6 +11,10 @@ module Authentication
     session[:user_id] = user.id
   end
 
+  def logout
+    reset_session
+  end
+
   private
 
   def current_user

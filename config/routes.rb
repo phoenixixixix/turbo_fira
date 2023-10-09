@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   post "log_in", to: "sessions#create"
   get "log_in", to: "sessions#new"
 
+  delete "log_out", to: "sessions#destroy"
+
   resources :stacks do
     resources :tasks, except: %i[ show ], shallow: true
   end

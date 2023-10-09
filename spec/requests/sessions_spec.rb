@@ -36,4 +36,27 @@ RSpec.describe "/sessions", type: :request do
       end
     end
   end
+
+  describe "GET /log_out" do
+    before do
+      log_in(create(:user))
+    end
+
+    it "resets session" do
+      current_session = session
+
+      delete log_out_path
+      expect(session).to_not eq(current_session)
+    end
+
+    it "expects absence of user_id key" do
+      delete log_out_path
+      expect(session).to_not have_key(:user_id)
+    end
+
+    it "redirects to root path" do
+      delete log_out_path
+      expect(response).to redirect_to(root_path)
+    end
+  end
 end
