@@ -19,10 +19,16 @@ RSpec.describe "ApplicationControllers", type: :request do
 
       expect(response.body).to include(user.email)
     end
+  end
 
-    it "returns 'Not Logged In' when no user is logged in" do
-      get root_path
-      expect(response.body).to include("Sign Up")
+  describe "#authenticate_user!" do
+    it "redirect not authenticated user to log in page" do
+      post stacks_path
+
+      expect(response).to redirect_to(log_in_path)
+
+      follow_redirect!
+      expect(response.body).to include("Log In or Sign Up to continue.")
     end
   end
 end

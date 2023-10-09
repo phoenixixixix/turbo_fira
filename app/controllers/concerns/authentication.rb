@@ -2,6 +2,7 @@ module Authentication
   extend ActiveSupport::Concern
 
   included do
+    before_action :authenticate_user!
     before_action :current_user
     helper_method :current_user
   end
@@ -17,6 +18,10 @@ module Authentication
 
   def redirect_if_authenticated!
     redirect_to root_path, notice: "You are already logged in." if current_user
+  end
+
+  def authenticate_user!
+    redirect_to log_in_path, notice: "Log In or Sign Up to continue." unless current_user
   end
 
   private

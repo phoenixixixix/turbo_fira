@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
   before_action :redirect_if_authenticated!, except: :destroy
+  skip_before_action :authenticate_user!, except: :destroy
 
   def new
     @user = User.new

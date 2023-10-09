@@ -3,6 +3,8 @@ require "rails_helper"
 RSpec.describe "/tasks", type: :request do
   let(:invalid_attributes) { { description: "" } }
 
+  before { log_in(create(:user)) }
+
   describe "GET /index" do
     it "renders a successful response" do
       task = create(:task)

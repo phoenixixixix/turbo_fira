@@ -5,6 +5,8 @@ RSpec.describe "/stacks", type: :request do
 
   let(:invalid_attributes) { { title: "" } }
 
+  before { log_in(create(:user)) }
+
   describe "GET /index" do
     it "renders a successful response" do
       Stack.create! valid_attributes
