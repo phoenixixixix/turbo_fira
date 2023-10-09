@@ -102,4 +102,37 @@ RSpec.describe User, type: :model do
       expect(authable_user.authenticate("invalid")).to be_falsey
     end
   end
+
+  describe "confirmation mechanism" do
+    let(:user) { create(:user, confirmed_at: nil) }
+
+    it "expects new user to be unconfirmed" do
+      expect(user.confirmed_at).to be_nil
+    end
+
+    describe "#confirm!" do
+      it "updates confirmed_at column" do
+        user.confirm!
+        expect(user.confirmed_at).to_not be_nil
+      end
+    end
+
+    describe "#confirm?" do
+      it "validates confirmation" do
+        user.confirm!
+        expect(user.confirmed?).to be_truthy
+
+        user.confirmed_at = nil
+        expect(user.confirmed?).to be_falsey
+      end
+    end
+
+    describe "#generate_confirmation_token" do
+      it "assigns token by which user can be retrieved from DB" do
+        token = user.generate_confirmation_token
+
+        expect(User.find_signed(token, purpose: :confirm_email)).to eq(user)
+      end
+    end
+  end
 end
