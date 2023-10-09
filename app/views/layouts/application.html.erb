@@ -13,11 +13,20 @@
 
   <body>
     <% if notice.present? %>
-      <div class="container mx-auto max-w-3xl relative px-4">
+      <div
+        class="container mx-auto max-w-3xl relative px-4"
+        id="flash"
+        data-controller="flash"
+      >
         <div class="absolute inset-0 pt-2 px-4">
           <div class="alert bg-base-100 border-0 shadow">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             <span><%= notice %></span>
+            <button data-action="flash#close">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
           </div>
         </div>
       </div>
