@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 
   delete "log_out", to: "sessions#destroy"
 
+  resources :confirmations, only: %i(create edit new), param: :confirmation_token
+
   resources :stacks do
     resources :tasks, except: %i[ show ], shallow: true
   end

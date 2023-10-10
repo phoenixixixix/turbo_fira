@@ -1,0 +1,17 @@
+<div class="mx-auto md:w-2/3 w-full">
+  <h1>Resend Confirmation</h1>
+
+  <%= form_with(model: @user, url: confirmations_path) do |form| %>
+    <%= render "shared/error_messages", resource: @user %>
+
+    <div class="my-5">
+      <%= form.label :email, class: "sr-only" %>
+      <%= form.text_field :email, placeholder: "example@mail.com", class: "input input-bordered w-full" %>
+    </div>
+
+    <div>
+      <%= form.submit "Confirm Email", class: "btn btn-primary" %>
+      <%= link_to "Cancel", root_path, class: "btn ml-2" %>
+    </div>
+  <% end %>
+</div>
