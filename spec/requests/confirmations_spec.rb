@@ -66,5 +66,21 @@ RSpec.describe "Confirmations", type: :request do
       post confirmations_path, params: { user: { email: "nomatch@m.com" } }
       expect(response).to redirect_to(new_confirmation_path)
     end
+
+    it "sends confirmation email" do
+      expect {
+        post confirmations_path, params: { user: { email: user.email } }
+      }.to change { ActionMailer::Base.deliveries.count }.by(1)
+    end
+
+    context "with invalid email" do
+      it "doesn't send confirmation email" do
+        %w(nomatch@mail.com abc@).each do |email|
+          expect {
+            post sign_up_path, params: { user: email }
+          }.to change { ActionMailer::Base.deliveries.count }.by(0)
+        end
+      end
+    end
   end
 end

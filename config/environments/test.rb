@@ -43,6 +43,9 @@ Rails.application.configure do
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
 
+  # Set host to the test environment so that urls will work in mailers.
+  config.action_mailer.default_url_options = { host: "test_turbo_fira.com" }
+
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
 

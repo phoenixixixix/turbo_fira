@@ -35,6 +35,12 @@ RSpec.describe "/users", type: :request do
         post sign_up_path, params: { user: valid_attributes }
         expect(response).to redirect_to(root_path)
       end
+
+      it "sends confirmation email" do
+        expect {
+          post sign_up_path, params: { user: valid_attributes }
+        }.to change { ActionMailer::Base.deliveries.count }.by(1)
+      end
     end
 
     context "with invalid parameters" do
@@ -47,6 +53,12 @@ RSpec.describe "/users", type: :request do
       it "renders a response with 422 status (i.e. to display the 'new' template)" do
         post sign_up_path, params: { user: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it "doesn't send confirmation email to invalid email" do
+        expect {
+          post sign_up_path, params: { user: invalid_attributes }
+        }.to change { ActionMailer::Base.deliveries.count }.by(0)
       end
     end
   end

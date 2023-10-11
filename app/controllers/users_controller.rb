@@ -9,6 +9,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      @user.send_confirmation_email!
       login(@user)
 
       redirect_to root_path, notice: "Successfully registered!"

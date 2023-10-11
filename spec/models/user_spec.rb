@@ -134,5 +134,13 @@ RSpec.describe User, type: :model do
         expect(User.find_signed(token, purpose: :confirm_email)).to eq(user)
       end
     end
+
+    describe "#send_confirmation_email!" do
+      it "sends confirmation email" do
+        expect {
+          user.send_confirmation_email!
+        }.to change { ActionMailer::Base.deliveries.count }.by(1)
+      end
+    end
   end
 end
