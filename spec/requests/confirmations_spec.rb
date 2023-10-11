@@ -25,18 +25,29 @@ RSpec.describe "Confirmations", type: :request do
 
       it "redirects to root path with notice" do
         get edit_confirmation_path(confirmation_token: token)
-        expect(response).to redirect_to(root_path)
 
+        expect(response).to redirect_to(root_path)
         follow_redirect!
         expect(flash[:notice]).to eq("Your email has been confirmed.")
       end
     end
 
     context "with invalid confirmation token" do
-      it "redirects to new confirmations path with notice" do
+      it "redirects to new path with notice" do
         get edit_confirmation_path(confirmation_token: "invalid_token")
-        expect(response).to redirect_to(new_confirmation_path)
 
+        expect(response).to redirect_to(new_confirmation_path)
+        follow_redirect!
+        expect(flash[:notice]).to eq("Invalid token.")
+      end
+
+      it "redirects to new with notice if token expired" do
+        token = user.generate_confirmation_token
+        travel User::CONFIRMATION_TOKEN_EXPIRATION + 1.minutes
+
+        get edit_confirmation_path(confirmation_token: token)
+
+        expect(response).to redirect_to(new_confirmation_path)
         follow_redirect!
         expect(flash[:notice]).to eq("Invalid token.")
       end
@@ -44,12 +55,10 @@ RSpec.describe "Confirmations", type: :request do
   end
 
   describe "POST /create" do
-    let(:user) { create(:user) }
-
     it "redirects to root path with notice for unconfirmed user" do
       post confirmations_path, params: { user: { email: user.email} }
-      expect(response).to redirect_to(root_path)
 
+      expect(response).to redirect_to(root_path)
       follow_redirect!
       expect(flash[:notice]).to eq("Check your email for confirmation instructions.")
     end

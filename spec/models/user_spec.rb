@@ -133,6 +133,16 @@ RSpec.describe User, type: :model do
 
         expect(User.find_signed(token, purpose: :confirm_email)).to eq(user)
       end
+
+      context "after token expired" do
+        it "find_signed by generated token returns nil" do
+          token = user.generate_confirmation_token
+
+          travel User::CONFIRMATION_TOKEN_EXPIRATION + 1.minutes
+
+          expect(User.find_signed(token, purpose: :confirm_email)).to be_nil
+        end
+      end
     end
 
     describe "#send_confirmation_email!" do

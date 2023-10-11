@@ -30,8 +30,11 @@ rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
 RSpec.configure do |config|
-  # include custom test helpers
+  # Custom test helpers
   config.include RequestsHelpers::Authentication, type: :request
+
+  # Helpers to work with time
+  config.include ActiveSupport::Testing::TimeHelpers
 
   # Factory Bot Syntax
   config.include FactoryBot::Syntax::Methods
