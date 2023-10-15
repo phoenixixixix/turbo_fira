@@ -59,6 +59,9 @@ group :development, :test do
     gem lib, git: "https://github.com/rspec/#{lib}.git", branch: 'main'
   end
 
+  gem "capybara"
+  gem "selenium-webdriver"
+
   gem "factory_bot_rails"
 end
 
