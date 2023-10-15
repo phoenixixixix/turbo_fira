@@ -33,6 +33,7 @@ end
 RSpec.configure do |config|
   # Custom test helpers
   config.include RequestsHelpers::Authentication, type: :request
+  config.include SystemHelpers::Authentication, type: :system
 
   # Helpers to work with time
   config.include ActiveSupport::Testing::TimeHelpers

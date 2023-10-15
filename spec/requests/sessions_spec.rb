@@ -65,9 +65,9 @@ RSpec.describe "/sessions", type: :request do
       expect(session).to_not have_key(:user_id)
     end
 
-    it "redirects to root path" do
+    it "redirects to log in path" do
       delete log_out_path
-      expect(response).to redirect_to(root_path)
+      expect(response).to redirect_to(log_in_path)
     end
   end
 end
