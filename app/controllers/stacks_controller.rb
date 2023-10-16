@@ -16,7 +16,7 @@ class StacksController < ApplicationController
   end
 
   def create
-    @stack = Stack.new(stack_params)
+    @stack = current_user.stacks.build(stack_params)
 
     if @stack.save
       redirect_to @stack, notice: "Stack was successfully created."

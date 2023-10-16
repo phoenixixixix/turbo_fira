@@ -1,6 +1,34 @@
 require "rails_helper"
 
 RSpec.describe User, type: :model do
+  describe "associations" do
+    describe "has many Stacks" do
+      let!(:user) { create(:user) }
+
+      it "creates stack that belongs to user" do
+        stack = user.stacks.create(attributes_for(:stack))
+
+        expect(stack.user).to eq(user)
+      end
+
+      it "expects user to have many stacks" do
+        2.times { create(:stack, user_id: user.id)}
+
+        expect(user.stacks.size).to eq(2)
+      end
+
+      it "destroys associated Stacks on destroy" do
+        stack = user.stacks.create(attributes_for(:stack))
+
+        expect {
+          user.destroy
+        }.to change { Stack.count }.by(-1)
+        stack
+        expect { stack.reload }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+  end
+
   describe "password" do
     subject { build(:user) }
 

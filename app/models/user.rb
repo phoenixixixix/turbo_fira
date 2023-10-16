@@ -2,6 +2,8 @@ class User < ApplicationRecord
   CONFIRMATION_TOKEN_EXPIRATION = 10.minutes
   MAILER_FROM_EMAIL = "no-reply@turbo_fira.com"
 
+  has_many :stacks, dependent: :destroy
+
   validates :email,
             presence: true,
             uniqueness: true,

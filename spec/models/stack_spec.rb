@@ -38,6 +38,27 @@ RSpec.describe Stack, type: :model do
         end
       end
     end
+
+    describe "belonging to user" do
+      subject { build(:stack) }
+
+      it "creates stack with user" do
+        user = create(:user)
+
+        subject.user = user
+        subject.save
+
+        expect(subject.user).to eq(user)
+      end
+
+      it "expects user to be present" do
+        subject.user = nil
+
+        expect(subject).to be_invalid
+        subject.valid?
+        expect(subject.errors.full_messages).to include("User must exist")
+      end
+    end
   end
 
   describe "validations" do
