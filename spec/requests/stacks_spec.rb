@@ -12,6 +12,25 @@ RSpec.describe "/stacks", type: :request do
       get stacks_url
       expect(response).to be_successful
     end
+
+    it "shows stacks of logged in user" do
+      match_title = "Logged in user Stack"
+      create(:stack, title: match_title, user_id: logged_in_user.id)
+
+      get stacks_url
+
+      expect(response.body).to include(match_title)
+    end
+
+    it "doesn't show stacks of another user" do
+      second_user = create(:user)
+      nomatch_title = "Nomatch"
+      create(:stack, title: nomatch_title, user_id: second_user.id)
+
+      get stacks_url
+
+      expect(response.body).to_not include(nomatch_title)
+    end
   end
 
   describe "GET /show" do

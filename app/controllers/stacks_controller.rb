@@ -2,7 +2,7 @@ class StacksController < ApplicationController
   before_action :set_stack, only: %i[ show edit update destroy ]
 
   def index
-    @stacks = Stack.all
+    @stacks = current_user.stacks
   end
 
   def show
